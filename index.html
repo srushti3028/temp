@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TennisLore.com - Unforgettable Tennis Tales</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Oswald:wght@700&family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    /* CSS Variables */
+    :root {
+      --color-primary-green: #2E7D32;
+      --color-accent-gold: #FFD700;
+      --color-charcoal: #424242;
+      --color-white: #ffffff;
+
+      --font-headline: 'Oswald', 'Montserrat', sans-serif;
+      --font-body: 'Roboto', sans-serif;
+
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 2rem;
+      --spacing-xl: 3rem;
+
+      --shadow-soft: rgba(0,0,0,0.15);
+    }
+
+    /* Reset and base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: var(--color-white);
+      color: var(--color-charcoal);
+      font-family: var(--font-body);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: var(--color-primary-green);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover,
+    a:focus {
+      color: var(--color-accent-gold);
+      outline: none;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+    }
+
+    /* Header */
+    header {
+      background: var(--color-white);
+      border-bottom: 2px solid var(--color-primary-green);
+      padding: var(--spacing-md) 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 5px var(--shadow-soft);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+    }
+    .logo {
+      font-family: var(--font-headline);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-primary-green);
+      letter-spacing: 0.05em;
+      cursor: default;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      gap: var(--spacing-lg);
+    }
+    nav a {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-bottom: 2px solid transparent;
+      position: relative;
+    }
+    nav a:hover,
+    nav a:focus {
+      border-bottom-color: var(--color-accent-gold);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--color-charcoal);
+      color: var(--color-white);
+      text-align: center;
+      padding: var(--spacing-lg) var(--spacing-md);
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+    }
+
+    /* Story Grid */
+    main {
+      padding: var(--spacing-xl) 0;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing-lg);
+    }
+
+    /* Ticket stub card */
+    .story-card {
+      background: var(--color-white);
+      border-radius: 12px;
+      box-shadow: 0 10px 20px var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      font-family: var(--font-body);
+      display: flex;
+      flex-direction: column;
+      /* Ticket-stub style edges (notches) on left and right */
+      clip-path: polygon(
+        20px 0%, 
+        calc(100% - 20px) 0%, 
+        100% 20px, 
+        100% calc(100% - 20px),
+        calc(100% - 20px) 100%, 
+        20px 100%, 
+        0% calc(100% - 20px), 
+        0% 20px
+      );
+      transition: transform 0.3s ease;
+    }
+    .story-card:hover,
+    .story-card:focus-within {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 25px rgba(46, 125, 50, 0.5);
+      outline: none;
+    }
+
+    .story-image-container {
+      flex-shrink: 0;
+      position: relative;
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+    }
+    .story-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .story-card:hover .story-image-container img,
+    .story-card:focus-within .story-image-container img {
+      transform: scale(1.05);
+    }
+
+    .story-content {
+      padding: var(--spacing-md);
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .story-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin: 0 0 var(--spacing-sm) 0;
+      color: var(--color-primary-green);
+    }
+    .story-snippet {
+      font-size: 0.9rem;
+      color: var(--color-charcoal);
+      margin-bottom: var(--spacing-md);
+      flex-grow: 1;
+    }
+
+    /* Overlay on hover */
+    .read-more-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(46,125,50,0.85);
+      color: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.5rem;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      user-select: none;
+      border-radius: 12px;
+      clip-path: polygon(
+        20px 0%, 
+        calc(100% - 20px) 0%, 
+        100% 20px, 
+        100% calc(100% - 20px),
+        calc(100% - 20px) 100%, 
+        20px 100%, 
+        0% calc(100% - 20px), 
+        0% 20px
+      );
+      animation: none;
+    }
+    .story-card:hover .read-more-overlay,
+    .story-card:focus-within .read-more-overlay {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: all;
+      animation: cheerPulse 1.2s ease infinite alternate;
+    }
+
+    @keyframes cheerPulse {
+      0% {
+        box-shadow: 0 0 8px var(--color-accent-gold);
+      }
+      100% {
+        box-shadow: 0 0 20px var(--color-accent-gold);
+      }
+    }
+
+    /* Buttons */
+    .btn {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      display: inline-block;
+      text-align: center;
+      padding: 0.5em 1.25em;
+      border: none;
+      line-height: 1.2;
+    }
+    .btn-primary {
+      background-color: var(--color-primary-green);
+      color: var(--color-white);
+      box-shadow: 0 5px 10px rgba(46, 125, 50, 0.5);
+      border: none;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: #256623;
+      box-shadow: 0 8px 16px rgba(46, 125, 50, 0.7);
+      outline: none;
+    }
+    .btn-ghost-gold {
+      background: transparent;
+      color: var(--color-accent-gold);
+      border: 1px solid var(--color-accent-gold);
+    }
+    .btn-ghost-gold:hover,
+    .btn-ghost-gold:focus {
+      background-color: var(--color-accent-gold);
+      color: var(--color-primary-green);
+      outline: none;
+    }
+
+    /* Responsive nav for mobile */
+    @media (max-width: 600px) {
+      .header-inner {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+      }
+      nav {
+        gap: var(--spacing-md);
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner container" role="banner">
+      <div class="logo" aria-label="TennisLore Logo">TennisLore</div>
+      <nav role="navigation" aria-label="Main navigation">
+        <a href="#" tabindex="0">Home</a>
+        <a href="#" tabindex="0">Stories</a>
+        <a href="#" tabindex="0" class="btn btn-primary" style="padding: 0.4em 1em;">Submit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" role="main" aria-label="Stories grid">
+    <section class="story-grid" aria-live="polite">
+      <article class="story-card" tabindex="0" aria-labelledby="story1-title" aria-describedby="story1-desc">
+        <div class="story-image-container">
+          <img src="https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf?auto=format&fit=crop&w=400&q=80" alt="Tennis match action" loading="lazy" />
+        </div>
+        <div class="story-content">
+          <h2 class="story-title" id="story1-title">The Epic Wimbledon Final</h2>
+          <p class="story-snippet" id="story1-desc">A breathtaking showdown on the iconic grass courts, where history was made in every rally and the crowd was left in awe of the fierce competition and sportsmanship displayed.</p>
+        </div>
+        <div class="read-more-overlay">Read More</div>
+      </article>
+
+
+
+      <article class="story-card" tabindex="0" aria-labelledby="story3-title" aria-describedby="story3-desc">
+        <div class="story-image-container">
+          <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=400&q=80" alt="Crowd cheering in tennis stadium" loading="lazy" />
+        </div>
+        <div class="story-content">
+          <h2 class="story-title" id="story3-title">Fan's Voice: Stadium Echoes</h2>
+          <p class="story-snippet" id="story3-desc">Discover the heartbeat of tennis – the fans. Their cheers, traditions, and stories bring life to every match, enriching the culture and excitement around the sport worldwide.</p>
+        </div>
+        <div class="read-more-overlay">Read More</div>
+      </article>
+
+      <article class="story-card" tabindex="0" aria-labelledby="story4-title" aria-describedby="story4-desc">
+        <div class="story-image-container">
+          <img src="C:\Users\Comnet\Desktop\tennis1.png" alt="Tennis player serving" loading="lazy" />
+        </div>
+        <div class="story-content">
+          <h2 class="story-title" id="story4-title">Mastering the Serve</h2>
+          <p class="story-snippet" id="story4-desc">Explore techniques and tips from tennis greats on mastering the serve—the powerful first strike that can dictate the flow and outcome of every game.</p>
+        </div>
+        <div class="read-more-overlay">Read More</div>
+      </article>
+
+      <article class="story-card" tabindex="0" aria-labelledby="story5-title" aria-describedby="story5-desc">
+        <div class="story-image-container">
+          <img src="https://images.unsplash.com/photo-1534367610409-072f8b3a7ad6?auto=format&fit=crop&w=400&q=80" alt="Vintage tennis photo" loading="lazy" />
+        </div>
+        <div class="story-content">
+          <h2 class="story-title" id="story5-title">Tennis Legends of the Past</h2>
+          <p class="story-snippet" id="story5-desc">Journey through time with iconic players whose talent and determination laid the groundwork for today's tennis legends and inspired generations worldwide.</p>
+        </div>
+        <div class="read-more-overlay">Read More</div>
+      </article>
+
+      <article class="story-card" tabindex="0" aria-labelledby="story6-title" aria-describedby="story6-desc">
+        <div class="story-image-container">
+          <img src="https://images.unsplash.com/photo-1468253645184-9a0a43055c8e?auto=format&fit=crop&w=400&q=80" alt="Tennis match scoreboard" loading="lazy" />
+        </div>
+        <div class="story-content">
+          <h2 class="story-title" id="story6-title">Stats that Matter</h2>
+          <p class="story-snippet" id="story6-desc">Unpacking key match statistics that reveal player strategies, turning points, and performance insights that make tennis analytics a thrilling aspect for fans and pros alike.</p>
+        </div>
+        <div class="read-more-overlay">Read More</div>
+      </article>
+      <article class="story-card" tabindex="0" aria-labelledby="story2-title" aria-describedby="story2-desc">
+        <div class="story-image-container">
+          <img src="https://stock.adobe.com/images/closeup-tennis-ball-with-racket-on-black-background/485049015" alt="Tennis racquet and ball closeup" loading="lazy" />
+        </div>
+        <div class="story-content">
+          <h2 class="story-title" id="story2-title">Racquet Tech Evolution</h2>
+          <p class="story-snippet" id="story2-desc">From wooden frames to high-tech composites, the evolution of racquets revolutionized the game, offering players more power and precision than ever before in tennis history.</p>
+        </div>
+        <div class="read-more-overlay">Read More</div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    TennisLore.com &copy; 2025 — Celebrating tennis stories, past and present.
+  </footer>
+</body>
+</html>
+
